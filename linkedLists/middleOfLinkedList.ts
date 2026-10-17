@@ -1,21 +1,13 @@
 const middleNode = (head: ListNode | null): ListNode | null => {
-  // count nodes
-  let count = 0;
-  let current = head; // pointer for walking down the list
+  let slow = head;
+  let fast = head;
 
-  while (current !== null) {
-    count++;
-    current = current.next;
+  // fast pointer that goes ahead twice as fast
+  // by the time it becomes null slow should be in the middle
+  // thats how we find the middle now
+  while (fast && fast.next) {
+    slow = slow.next; // slow trails fast so its never null inside the loop
+    fast = fast.next.next;
   }
-
-  // find middle
-  let middle = Math.floor(count / 2);
-  current = head;
-
-  // go to the middle with a pointer and get the value
-  for (let i = 0; i < middle; i++) {
-    current = current.next;
-  }
-
-  return current;
+  return slow;
 };

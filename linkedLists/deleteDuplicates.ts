@@ -2,11 +2,14 @@
 // Return the linked list sorted as well.
 
 const deleteDuplicates = (head: ListNode | null): ListNode | null => {
+  // go through and when you run into a duplicate
+  // make it point to the next node
+
   let current = head;
 
-  while (current !== null && current.next !== null) {
+  while (current && current.next) {
     if (current.val === current.next.val) {
-      current.next = current.next.next; // skip the duplicate
+      current.next = current.next.next;
     } else {
       current = current.next;
     }
