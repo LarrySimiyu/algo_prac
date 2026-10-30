@@ -10,37 +10,29 @@
 // cut the middle section out, reverse it with a loop then stitch it back in.
 
 const reverser = (head: ListNode | null): ListNode | null => {
-  // place a fake node infront of the linked list so that every real node has a node before
-  // even if there is only 1
-  // dummy → 1 → 2 → 3 → 4 → 5
-  const dummy = new ListNode(0, head);
+  // dummy node incase reversal starts at the first node
+  const dummy: ListNode = new ListNode(0, head);
 
-  // walk through the node before the section
+  // walk to node before the section start
   let before: ListNode = dummy;
   for (let i = 1; i < left; i++) {
-    before = before.next!;
+    before = before.next;
   }
 
-  // remember first node of the section.
-  // after reversing it becomes the last node and will need to connect to whatever
-  // comes after the secion
-  const sectionStart = before.next!;
+  const sectionStart = before.next;
 
-  // reverse just the section
-
-  let prev: ListNode | null = null;
-  let current: ListNode | null = sectionStart;
+  let prev = null;
+  let curr = sectionStart;
 
   for (let i = 0; i < right - left + 1; i++) {
-    const next: ListNode | null = current!.next;
-    current!.next = prev;
-    prev = current;
-    current = next;
+    // save the next before we lose it
+    const next = curr!.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
   }
-
-  // stitch reversed section back into the list
+  // stich reversed section back to the list
   before.next = prev;
-  sectionStart.next = current;
-
+  sectionStart.next = curr;
   return dummy.next;
 };

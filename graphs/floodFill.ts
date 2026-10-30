@@ -1,24 +1,26 @@
 function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {
   const original = image[sr][sc];
 
-  // will cause an infinite loop
-  if (original === color) return;
+  if (original === color) return image;
 
-  const fill = (r: number, c: number): void => {
-    if (r < 0 || row >= image.length || col < 0 || col >= image[0].length) return;
+  // helper that gets called for filling
 
-    // check if pixel is already painted
-    // if pizel is anything besides original that means its either changed or a wall (pizel not worth changing)
-    if (image[r][c] !== original) return;
+  const fill = (row: number, col: number): void => {
+    // check if im out of bounds
+    if (row < 0 || row >= image.length || col < 0 || col >= image[0].length) return;
 
-    image[r][c] = color;
+    if (image[row][col] !== original) return;
 
-    // down, up, left, right
-    fill(r - 1, c);
-    fill(r + 1, c);
-    fill(r, col - 1);
-    fill(r, col + 1);
+    image[row][col] = color;
+
+    // up, down, left, right
+    fill(row - 1, col);
+    fill(row + 1, col);
+
+    fill(row, col - 1);
+    fill(row, col + 1);
   };
+
   fill(sr, sc);
   return image;
 }
