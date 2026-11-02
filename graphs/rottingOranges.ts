@@ -16,6 +16,7 @@ const orangesRotting = (grid: number[][]): number => {
   // each minute rot 4 neighbors
   // add to the queue at the end of the minute so we dont go in a loop
   //
+  let minutes = 0
 
   // help move to neighbors
   const dirs = [
@@ -24,21 +25,6 @@ const orangesRotting = (grid: number[][]): number => {
     [0, 1],
     [0, -1],
   ];
-
-  let minutes = 0;
-
-  while (queue.length > 0 && fresh > 0) {
-    const size = queue.length;
-
-    for (let i = 0; i < size; i++) {
-      const [r, c] = queue.shift();
-
-      for (const [dr, dc] of dirs) {
-        const nr = r + dr;
-        const nc = c + dc;
-
-        if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
-        if (grid[nr][nc] !== 1) continue;
 
         grid[nr][nc] = 2;
         fresh--;
