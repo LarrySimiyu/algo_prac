@@ -1,20 +1,14 @@
 const diameter = (root): number => {
-  let best = 0; // longest path found so far, at any node
+  let best = 0;
 
-  // returns depth so the parent can build its own path on top of it
-  const depth = (node: TreeNode | null): number => {
+  const height = (node: any): number => {
     if (!node) return 0;
-
-    const left = depth(node.left);
-    const right = depth(node.right);
-
-    // path that turns at this node: deepest left + deepest right
+    const left = height(node.left);
+    const right = height(node.right);
     best = Math.max(best, left + right);
-
-    // parent only extends one side, so hand up the deeper one plus this node
-    return Math.max(left, right) + 1;
+    return 1 + Math.max(left, right);
   };
 
-  depth(root);
-  return best; // depth's return value was just for the parents; the answer lives in best
+  height(root);
+  return best;
 };
